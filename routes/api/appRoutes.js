@@ -26,37 +26,33 @@ router.delete("/homepage/delete/:boardId", auth, controller.removeBoard);
 router.post("/homepage/boards/:boardId", auth, controller.addColumn);
 
 router.patch(
-  "/homepage/boards/:boardId/:columnId",
+  "/homepage/boards/updateColumn/:columnId",
   auth,
   controller.updateColumn
 );
 
 router.delete(
-  "/homepage/boards/:boardId/delete/:columnId",
+  "/homepage/boards/deleteColumn/:columnId",
   auth,
   controller.removeColumn
 );
 
-router.post(
-  "/homepage/boards/:boardId/:columnId/addCard",
-  auth,
-  controller.addCard
-);
+router.post("/homepage/boards/addCard/:columnId", auth, controller.addCard);
 
 router.patch(
-  "/homepage/boards/:boardId/:columnId/:cardId",
+  "/homepage/boards/updateCard/:cardId",
   auth,
   controller.updateCard
 );
 
 router.delete(
-  "/homepage/boards/:boardId/:columnId/:cardId/remove",
+  "/homepage/boards/removeCard/:cardId",
   auth,
   controller.removeCard
 );
 
 router.patch(
-  "/homepage/boards/:boardId/:cardId/move/:columnId",
+  "/homepage/boards/moveCard/:cardId/:columnId",
   auth,
   controller.moveCard
 );

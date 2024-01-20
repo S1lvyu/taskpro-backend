@@ -180,7 +180,6 @@ const createColumn = async ({ boardId, columnName }) => {
   return column;
 };
 const editColumn = async ({ id, columnName }) => {
-  console.log(id);
   const update = { name: columnName };
   const result = await Column.findOneAndUpdate(
     { _id: id },
@@ -188,6 +187,7 @@ const editColumn = async ({ id, columnName }) => {
     { new: true }
   );
   if (!result) throw new Error("Column not found");
+  return result;
 };
 
 const deleteColumn = async ({ id }) => {
