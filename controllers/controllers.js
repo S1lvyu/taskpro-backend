@@ -357,9 +357,9 @@ const addColumn = async (req, res, next) => {
   try {
     const { boardId } = req.params;
     console.log(req.body);
-    const { name } = req.body;
-    console.log(name);
-    const response = await createColumn({ boardId, columnName: name });
+    const { columnName } = req.body;
+    console.log(columnName);
+    const response = await createColumn({ boardId, columnName: columnName });
     res.status(200).json({
       status: "succes",
       code: 200,
@@ -378,8 +378,8 @@ const updateColumn = async (req, res, next) => {
   try {
     const { columnId } = req.params;
 
-    const { name } = req.body;
-    const result = await editColumn({ id: columnId, columnName: name });
+    const { columnName } = req.body;
+    const result = await editColumn({ id: columnId, columnName: columnName });
     res.status(200).json({
       status: "succes",
       code: 200,
@@ -414,6 +414,7 @@ const addCard = async (req, res, next) => {
   try {
     const { columnId } = req.params;
     const { title, description, labelColor, deadline } = req.body;
+    console.log(req.body);
     const result = await createCard({
       columnId,
       title,

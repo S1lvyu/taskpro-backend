@@ -195,12 +195,18 @@ const deleteColumn = async ({ id }) => {
   if (!result) throw new Error("Column not found");
   return result;
 };
-const createCard = async ({ columnId, title, description, color, date }) => {
+const createCard = async ({
+  columnId,
+  title,
+  description,
+  labelColor,
+  deadline,
+}) => {
   const card = new Card({
     title: title,
     description: description,
-    labelColor: color,
-    deadline: date,
+    labelColor: labelColor,
+    deadline: deadline,
     owner: columnId,
   });
   await card.save();
