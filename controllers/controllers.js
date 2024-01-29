@@ -396,6 +396,7 @@ const updateColumn = async (req, res, next) => {
 const removeColumn = async (req, res, next) => {
   try {
     const columnId = req.params;
+    console.log("columnId:", columnId);
     const result = await deleteColumn({ columnId });
     res.status(200).json({
       status: "succes",

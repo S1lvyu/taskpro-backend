@@ -213,12 +213,12 @@ const createCard = async ({
   await Column.findByIdAndUpdate(columnId, { $push: { cards: card._id } });
   return card;
 };
-const editCard = async ({ id, title, description, color, date }) => {
+const editCard = async ({ id, title, description, labelColor, deadline }) => {
   const update = {
     title: title,
     description: description,
-    labelColor: color,
-    deadline: date,
+    labelColor: labelColor,
+    deadline: deadline,
   };
   const result = await Card.findOneAndUpdate(
     { _id: id },
