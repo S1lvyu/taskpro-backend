@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "http://localhost:3000/api/",
+      title: "http://localhost:3000/taskPro/",
       version: "1.0.0",
-      description: "Descrierea API-ului",
+      description: "API description",
     },
   },
   apis: ["./routes/api/appRoutes.js"],

@@ -248,7 +248,6 @@ const updateUser = async (req, res, next) => {
     if (email) user.email = email;
     if (password) user.setPassword(password);
 
-    // Utilizează `upload.single('avatar')` pentru a gestiona încărcarea unui singur fișier cu cheia 'avatar'
     upload.single("avatar")(req, res, async function (err) {
       if (err instanceof multer.MulterError) {
         return res.status(400).json({
@@ -266,7 +265,6 @@ const updateUser = async (req, res, next) => {
         });
       }
 
-      // Restul codului pentru manipularea fișierului încărcat și încărcarea în Cloudinary
       if (req.file) {
         const result = await cloudinary.uploader.upload(req.file.path, {
           folder: "avatars",

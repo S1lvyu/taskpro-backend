@@ -1,1 +1,1 @@
-link pentru swagger http://localhost:3000/api-docs/
+link pentru swagger http://localhost:3000/taskPro-docs/

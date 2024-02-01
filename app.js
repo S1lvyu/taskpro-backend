@@ -16,7 +16,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+app.use("/taskPro-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use("/taskPro", appRoutes);
 
 app.use((req, res) => {
