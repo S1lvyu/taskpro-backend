@@ -395,9 +395,9 @@ const updateColumn = async (req, res, next) => {
 };
 const removeColumn = async (req, res, next) => {
   try {
-    const columnId = req.params;
+    const { columnId } = req.params;
     console.log("columnId:", columnId);
-    const result = await deleteColumn({ columnId });
+    const result = await deleteColumn({ id: columnId });
     res.status(200).json({
       status: "succes",
       code: 200,
@@ -465,7 +465,7 @@ const updateCard = async (req, res, next) => {
 const removeCard = async (req, res, next) => {
   try {
     const { cardId } = req.params;
-    const result = await deleteCard({ cardId });
+    const result = await deleteCard({ id: cardId });
     res.status(200).json({
       status: "succes",
       code: 200,

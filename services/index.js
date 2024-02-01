@@ -158,6 +158,7 @@ const editBoard = async ({ boardId, boardName, icon, background }) => {
 const deleteBoard = async ({ boardId }) => {
   const result = await Board.findOneAndDelete(boardId);
   if (!result) throw new Error("Board not found");
+  console.log(result);
   return result;
 };
 
@@ -191,9 +192,25 @@ const editColumn = async ({ id, columnName }) => {
 };
 
 const deleteColumn = async ({ id }) => {
-  const result = Column.findOneAndDelete(id);
-  if (!result) throw new Error("Column not found");
-  return result;
+  try {
+    // Găsește și șterge coloana
+    const deletedColumn = await Column.findByIdAndDelete(id);
+
+    if (!deletedColumn) {
+      throw new Error("Column not found");
+    }
+
+    // Șterge toate cardurile asociate acestei coloane
+    const deletedCards = await Card.deleteMany({ owner: id });
+
+    if (!deletedCards) {
+      throw new Error("Error deleting cards associated with the column");
+    }
+
+    return { deletedColumn, deletedCards };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 const createCard = async ({
   columnId,
@@ -229,15 +246,29 @@ const editCard = async ({ id, title, description, labelColor, deadline }) => {
   return result;
 };
 const deleteCard = async ({ id }) => {
-  const result = Card.findOneAndDelete(id);
+  const card = await Card.findById(id);
+  const columnId = card.owner;
+
+  const updatedColumn = await Column.findByIdAndUpdate(
+    columnId,
+    { $pull: { cards: id } },
+    { new: true }
+  );
+  if (!updatedColumn) {
+    throw new Error("Column not found");
+  }
+  await updatedColumn.save();
+  const result = await Card.findByIdAndDelete(id);
   if (!result) throw new Error("Card not found");
   return result;
 };
 const moveCardToColumn = async ({ cardId, newColumnId }) => {
   const card = await Card.findById(cardId);
+
   if (!card) {
     throw new Error("Card not found");
   }
+
   const oldColumn = await Column.findById(card.owner);
   if (!oldColumn) {
     throw new Error("Old column not found");
@@ -245,6 +276,7 @@ const moveCardToColumn = async ({ cardId, newColumnId }) => {
 
   oldColumn.cards.pull(cardId);
   await oldColumn.save();
+
   const newColumn = await Column.findById(newColumnId);
   if (!newColumn) {
     throw new Error("New column not found");
@@ -258,7 +290,11 @@ const moveCardToColumn = async ({ cardId, newColumnId }) => {
   // Salvează cardul
   await card.save();
 
-  return card;
+  return {
+    card,
+    oldColumnId: oldColumn._id, // Adaugă oldColumnId în răspuns
+    newColumnId,
+  };
 };
 
 const getBackgroundImages = async () => {
