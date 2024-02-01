@@ -223,7 +223,7 @@ const resendVerificationEmail = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    console.log(req.body);
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -317,7 +317,7 @@ const addBoard = async (req, res, next) => {
 const updateBoard = async (req, res, next) => {
   try {
     const { boardId } = req.params;
-    console.log(boardId);
+
     const { boardName, icon, background } = req.body;
     const result = await editBoard({ boardId, boardName, icon, background });
     res.status(200).json({
@@ -355,9 +355,9 @@ const removeBoard = async (req, res, next) => {
 const addColumn = async (req, res, next) => {
   try {
     const { boardId } = req.params;
-    console.log(req.body);
+
     const { columnName } = req.body;
-    console.log(columnName);
+
     const response = await createColumn({ boardId, columnName: columnName });
     res.status(200).json({
       status: "succes",
@@ -395,7 +395,7 @@ const updateColumn = async (req, res, next) => {
 const removeColumn = async (req, res, next) => {
   try {
     const { columnId } = req.params;
-    console.log("columnId:", columnId);
+
     const result = await deleteColumn({ id: columnId });
     res.status(200).json({
       status: "succes",
@@ -414,7 +414,7 @@ const addCard = async (req, res, next) => {
   try {
     const { columnId } = req.params;
     const { title, description, labelColor, deadline } = req.body;
-    console.log(req.body);
+
     const result = await createCard({
       columnId,
       title,
@@ -437,9 +437,8 @@ const addCard = async (req, res, next) => {
 };
 const updateCard = async (req, res, next) => {
   try {
-    console.log("test");
     const { cardId } = req.params;
-    console.log(cardId);
+
     const { title, description, labelColor, deadline } = req.body;
     const result = await editCard({
       id: cardId,
@@ -515,8 +514,7 @@ const loadBackgroundImages = async (req, res, next) => {
 const moveCard = async (req, res, next) => {
   try {
     const { cardId, columnId } = req.params;
-    console.log(cardId);
-    console.log(columnId);
+
     const response = await moveCardToColumn({
       cardId: cardId,
       newColumnId: columnId,

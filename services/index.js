@@ -159,13 +159,11 @@ const editBoard = async ({ boardId, boardName, icon, background }) => {
 const deleteBoard = async ({ boardId }) => {
   const result = await Board.findOneAndDelete(boardId);
   if (!result) throw new Error("Board not found");
-  console.log(result);
+
   return result;
 };
 
 const createColumn = async ({ boardId, columnName }) => {
-  console.log(boardId);
-  console.log(columnName);
   const columnWithSameName = await Column.findOne({
     owner: boardId,
     name: columnName,
