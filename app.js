@@ -5,6 +5,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerSpecs = require("./swagger");
 const appRoutes = require("./routes/api/appRoutes");
 const corsOptions = require("./cors");
+const bodyParser = require("body-parser");
 
 require("./middlewares/passportConfig");
 
@@ -13,7 +14,8 @@ dotenv.config();
 const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use("/taskPro", appRoutes);
 

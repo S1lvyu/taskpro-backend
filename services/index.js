@@ -65,6 +65,7 @@ const loginUser = async ({ email, password, token }) => {
   }
   user.setToken(token);
   await user.save();
+
   return user;
 };
 

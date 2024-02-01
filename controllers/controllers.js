@@ -105,6 +105,7 @@ const loginAccount = async (req, res, next) => {
         user: {
           email: result.email,
           name: result.name,
+          avatar: result.avatar,
         },
       },
     });
@@ -222,7 +223,7 @@ const resendVerificationEmail = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-
+    console.log(req.body);
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
